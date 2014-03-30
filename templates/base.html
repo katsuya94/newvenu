@@ -1,0 +1,100 @@
+{% load staticfiles %}
+{% load socialaccount %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+	<title>VeNU</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="{% static 'css/social-buttons-3.css' %}" rel="stylesheet">
+	<link href="{% static 'css/carousel.css' %}" rel="stylesheet">
+	<link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	  <![endif]-->
+	</head>
+
+	<body>
+		<div class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0px;">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">VeNU</a>
+				</div>
+				<div class="navbar-collapse collapse">
+
+					{% if user.is_authenticated %}
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+								{{ user.email }} <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="">My Events</a>
+								</li>
+								<li>
+									<a href="">Settings</a>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<a href="accounts/logout">Sign Out</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					{% else %}
+					<form class="navbar-form navbar-right" role="form" method="POST" action="{% url 'account_login' %}">
+						{% csrf_token %}
+						<div class="form-group">
+							<input type="text" name="login" placeholder="Email" class="form-control">
+						</div>
+						<div class="form-group">
+							<input type="password" name="password" placeholder="Password" class="form-control">
+						</div>
+						<button type="submit" class="btn btn-success">Sign in</button>
+						<a class="btn btn-facebook" href="{% provider_login_url 'facebook' method='oauth2' %}" role="button"><i class="fa fa-facebook"></i> | Connect</a>
+					</form>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		{% block banner %}{% endblock %}
+		<div class="container">	
+			{% block content %}{% endblock %}
+			<hr>
+			<footer>
+				<p>&copy; VeNU 2014</p>
+			</footer>
+		</div> <!-- /container -->
+		{% if error %}
+		<div class="alert alert-danger alert-dismissable" style="position: fixed; top: 50pt; left: 50%; margin-left: -250px; width: 500px;">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			{{ error }}
+		</div>
+		{% endif %}
+	<!-- Bootstrap core JavaScript
+	================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="{% static 'js/bootstrap.js' %}"></script>
+</body>
+</html>
