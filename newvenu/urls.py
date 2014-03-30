@@ -8,7 +8,6 @@ urlpatterns = patterns('',
 	# url(r'^$', 'newvenu.views.home', name='home'),
 	# url(r'^blog/', include('blog.urls')),
 	
-	url(r'^accounts/social/signup/', 'events.views.signup', name='socialaccount_signup'),
 	url(r'^accounts/', include('allauth.urls')),
 
 	url(r'^$', 'events.views.index'),
