@@ -20,4 +20,4 @@ class PrettySignupView(SignupView):
 	def form_valid(self, form):
 		return super(SignupView, self).form_valid(form)
 
-signup = PrettySignupView.as_view()
+signup = PrettySignupView.as_view(success_url='/')
